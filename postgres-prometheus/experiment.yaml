@@ -1,11 +1,11 @@
-apiVersion: redskyops.dev/v1alpha1
+apiVersion: redskyops.dev/v1beta1
 kind: Experiment
 metadata:
-  name: postgres-prometheus
+  name: postgres-prometheus-2
 spec:
   optimization:
   - name: "experimentBudget"
-    value: "40" #number of trials
+    value: "400" #number of trials
   parameters:
   - name: memory
     min: 500
@@ -14,22 +14,49 @@ spec:
     min: 100
     max: 4000
   metrics:
-  #- name: duration
-  #  minimize: true
-  #  query: "{{duration .StartTime .CompletionTime}}"
-  #  url:
+  - name: duration
+    minimize: true
+    query: "{{duration .StartTime .CompletionTime}}"
   - name: cost
     minimize: true
     query: "{{div (add (mul .Values.cpu 22) (mul .Values.memory 3)) 1000}}"
-  - name: commits
-    query: scalar(sum(irate(pg_stat_database_xact_commit{datname="test_db"}[2m])))
+  #- name: commits
+  #  #query: scalar(pg_stat_database_xact_commit{datname="test_db"} + on (instance) group_left topk(1,sort_desc(timestamp(pg_stat_database_xact_commit{datname="test_db"})))*0)
+  #  query: |
+  #    scalar(
+  #      pg_stat_database_tup_inserted{datname="test_db"} +
+  #      pg_stat_database_tup_deleted{datname="test_db"} +
+  #      pg_stat_database_tup_fetched{datname="test_db"} +
+  #      pg_stat_database_tup_returned{datname="test_db"} +
+  #      pg_stat_database_tup_updated{datname="test_db"} + on (instance) group_left topk(1,sort_desc(timestamp(pg_stat_database_xact_commit{datname="test_db"})))*0)
+  #  type: prometheus
+  ##  url: http://prometheus-server.default.svc:9090
+  #  url: http://localhost:9090
+  #- name: rollbacks
+  #  minimize: true
+  #  query: scalar(pg_stat_database_xact_rollback{datname="test_db"} + on (instance) group_left topk(1,sort_desc(timestamp(pg_stat_database_xact_commit{datname="test_db"})))*0)
+  #  type: prometheus
+  ##  url: http://prometheus-server.default.svc:9090
+  #  url: http://localhost:9090
+  - name: queries
+    query: |
+      scalar(
+        sum(
+          pg_stat_database_xact_commit{datname="test_db"}
+          +
+          pg_stat_database_xact_rollback{datname="test_db"}
+        ) by (instance)
+        +
+        on (instance) group_left
+        topk(1,sort_desc(timestamp(pg_stat_database_xact_commit{datname="test_db"})))*0
+      )
     type: prometheus
-    url: http://prometheus-server.default.svc:9090
-  - name: rollbacks
-    minimize: true
-    query: scalar(sum(irate(pg_stat_database_xact_rollback{datname="test_db"}[2m])))
-    type: prometheus
-    url: http://prometheus-server.default.svc:9090
+    url: http://localhost:9090
+  #- name: slowquery
+  #  query: scalar(avg(rate(pg_stat_activity_max_tx_duration{datname="test_db"}[1m])) > 1)
+  #  type: prometheus
+  #  url: http://localhost:9090
+  #  minimize: true
   patches:
   - targetRef:
       kind: Deployment
@@ -56,8 +83,17 @@ spec:
           template: # pod
             spec:
               containers:
-              - image: crunchydata/crunchy-pgbench:centos7-11.4-2.4.1
+              - image: crunchydata/crunchy-pgbench:centos7-12.3-4.4.0
                 name: pgbench
                 envFrom:
                 - secretRef:
                     name: postgres-secret
+                env:
+                - name: PGBENCH_SCALE
+                  value: "100"
+                - name: PGBENCH_CLIENTS
+                  value: "50"
+                - name: PGBENCH_JOBS
+                  value: "4"
+                - name: PGBENCH_TRANSACTIONS
+                  value: "10"

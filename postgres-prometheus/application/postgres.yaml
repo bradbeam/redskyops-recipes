@@ -39,6 +39,14 @@ spec:
         env:
           - name: DATA_SOURCE_URI
             value: "localhost/test_db?sslmode=disable"
+          - name: PG_EXPORTER_EXCLUDE_DATABASES
+            value: template0,template1,postgres
+          #- name: PG_EXPORTER_EXTEND_QUERY_PATH
+          #  value: /opt/bitnami/postgres-exporter/queries/queries.yaml
+          #- name: PG_EXPORTER_DISABLE_DEFAULT_METRIC
+          #  value: "true"
+          - name: PG_EXPORTER_DISABLE_SETTINGS_METRICS
+            value: "true"
           - name: DATA_SOURCE_USER
             valueFrom:
               secretKeyRef:
@@ -52,6 +60,9 @@ spec:
         ports:
           - name: http-metrics
             containerPort: 9187
+        volumeMounts:
+          - name: postgres-queries
+            mountPath: /opt/bitnami/postgres-exporter/queries
       - image: bitnami/postgresql:12-debian-10
         name: postgres
         resources:
@@ -79,12 +90,23 @@ spec:
               secretKeyRef:
                 name: postgres-secret
                 key: PG_PASSWORD
+          - name: POSTGRESQL_POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: PG_POSTGRES_PASSWORD
+          - name: BITNAMI_DEBUG
+            value: "true"
         ports:
         - containerPort: 5432
           name: postgres
         volumeMounts:
           - name: postgres-storage
             mountPath: /var/lib/postgresql/data
+          - name: postgres-init
+            mountPath: /docker-entrypoint-initdb.d
+          - name: postgres-conf
+            mountPath: /opt/bitnami/postgresql/conf/conf.d
         readinessProbe:
           tcpSocket:
             port: 5432
@@ -105,3 +127,18 @@ spec:
       volumes:
         - name: postgres-storage
           emptyDir: {}
+        - name: postgres-queries
+          configMap:
+            name: postgres-queries
+        - name: postgres-init
+          configMap:
+            name: postgres-init
+            items:
+            - key: stat.sh
+              path: stat.sh
+        - name: postgres-conf
+          configMap:
+            name: postgres-init
+            items:
+            - key: stat.conf
+              path: stat.conf

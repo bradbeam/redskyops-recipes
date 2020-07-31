@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init
+data:
+  stat.sh: |
+    echo "CREATE EXTENSION pg_stat_statements;" | \
+      postgresql_execute "" "postgres" "" "localhost"
+    echo "\c test_db
+          CREATE EXTENSION pg_stat_statements;" | \
+      postgresql_execute "" "postgres" "" "localhost"
+  stat.conf: |
+    shared_preload_libraries = 'pg_stat_statements'
+
