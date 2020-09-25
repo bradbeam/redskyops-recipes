@@ -1,7 +1,7 @@
 apiVersion: redskyops.dev/v1alpha1
 kind: Experiment
 metadata:
-  name: voting-app-example
+  name: voting-app-beam
 spec:
   optimization:
   - name: "experimentBudget"
@@ -9,7 +9,7 @@ spec:
   parameters:
   - name: worker_memory
     min: 200
-    max: 2000
+    max: 1000
   - name: worker_cpu
     min: 100
     max: 1000
@@ -18,7 +18,7 @@ spec:
     max: 4
   - name: voting_memory
     min: 200
-    max: 2000
+    max: 1000
   - name: voting_cpu
     min: 100
     max: 1000
@@ -27,19 +27,18 @@ spec:
     max: 4
   - name: db_memory
     min: 200
-    max: 2000
+    max: 1000
   - name: db_cpu
     min: 100
     max: 1000
   - name: redis_memory
     min: 200
-    max: 2000
+    max: 1000
   - name: redis_cpu
     min: 100
     max: 1000
   metrics:
   - name: throughput
-    minimize: false
     type: jsonpath
     query: '{.total}'
     path: '/metrics'
@@ -47,6 +46,43 @@ spec:
     selector:
       matchLabels:
         component: result-exporter
+#  - name: cpu_utilization
+#    type: prometheus
+#    query: '{{cpuUtilization . "component=worker"}}'
+#    selector:
+#      matchLabels:
+#        app: prometheus
+#  - name: mem_utilization
+#    type: prometheus
+#    query: '{{memoryUtilization . "component=worker"}}'
+#    selector:
+#      matchLabels:
+#        app: prometheus
+  - name: cpu_requests
+    type: prometheus
+    query: '{{cpuRequests . "component=worker"}}'
+    selector:
+      matchLabels:
+        app: prometheus
+  - name: memory_requests
+    type: prometheus
+    query: '{{memoryRequests . "component=worker"}}'
+    selector:
+      matchLabels:
+        app: prometheus
+  - name: cpu_cost
+    type: prometheus
+    query: '({{cpuRequests . "component=worker"}} * 0.022)'
+    selector:
+      matchLabels:
+        app: prometheus
+  - name: memory_cost
+    type: prometheus
+    query: '({{memoryRequests . "component=worker"}} * 0.0000000003)'
+    selector:
+      matchLabels:
+        app: prometheus
+  patches:
   - name: cost
     minimize: true
     type: pods
@@ -128,6 +164,12 @@ spec:
                   memory: "{{ .Values.redis_memory }}Mi"
   template: # trial
     spec:
+      setupTasks:
+      - name: monitoring
+        args:
+        - prometheus
+        - $(MODE)
+      setupServiceAccountName: promsetup
       template: # job
         spec:
           template: # pod
