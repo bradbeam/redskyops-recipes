@@ -1,9 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: default
-
 resources:
-- application
-- experiment.yaml
+- experiment_free_tier.yaml
+- rally-config.yaml
 - service-account.yaml
