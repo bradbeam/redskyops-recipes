@@ -5,7 +5,7 @@ metadata:
 spec:
   optimization:
   - name: "experimentBudget"
-    value: "60"
+    value: "80"
   parameters:
   - name: memory
     min: 1000
@@ -16,6 +16,9 @@ spec:
   - name: heap_percent
     min: 20
     max: 80
+  - name: replicas
+    min: 3
+    max: 5
   metrics:
   - name: duration
     minimize: true
@@ -44,6 +47,8 @@ spec:
         helmValues:
         - name: cluster.name
           value: rally-demo
+        - name: replicas
+          value: "{{ .Values.replicas }}"
         - name: resources.limits.cpu
           value: "{{ .Values.cpu }}m"
         - name: resources.limits.memory

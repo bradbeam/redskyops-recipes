@@ -1,0 +1,68 @@
+2020-09-22 20:49:54,225 -not-actor-/PID:1 esrally.rally INFO Race id [5566abf3-3fd3-404d-bb54-e6263a8e4f6c]
+2020-09-22 20:49:54,225 -not-actor-/PID:1 esrally.rally INFO OS [uname_result(system='Linux', node='elasticsearch-example-free-tier-beam-004-mtf2z', release='4.19.76-linuxkit', version='#1 SMP Tue May 26 11:42:35 UTC 2020', machine='x86_64', processor='')]
+2020-09-22 20:49:54,225 -not-actor-/PID:1 esrally.rally INFO Python [namespace(_multiarch='x86_64-linux-gnu', cache_tag='cpython-38', hexversion=50856688, name='cpython', version=sys.version_info(major=3, minor=8, micro=2, releaselevel='final', serial=0))]
+2020-09-22 20:49:54,225 -not-actor-/PID:1 esrally.rally INFO Rally version [2.0.1]
+2020-09-22 20:49:54,226 -not-actor-/PID:1 esrally.utils.net INFO Connecting directly to the Internet (no proxy support).
+2020-09-22 20:49:54,598 -not-actor-/PID:1 esrally.rally INFO Detected a working Internet connection.
+2020-09-22 20:49:54,599 -not-actor-/PID:1 esrally.rally INFO Actor system already running locally? [False]
+2020-09-22 20:49:54,599 -not-actor-/PID:1 esrally.actor INFO Starting actor system with system base [multiprocTCPBase] and capabilities [{'coordinator': True, 'ip': '127.0.0.1', 'Convention Address.IPv4': '127.0.0.1:1900'}].
+2020-09-22 20:49:54,621 -not-actor-/PID:16 root INFO ++++ Actor System gen (3, 10) started, admin @ ActorAddr-(T|:1900)
+2020-09-22 20:49:54,632 -not-actor-/PID:1 esrally.racecontrol INFO User specified pipeline [benchmark-only].
+2020-09-22 20:49:54,632 -not-actor-/PID:1 esrally.racecontrol INFO Using configured hosts [{'host': 'elasticsearch-master'}]
+2020-09-22 20:49:54,633 -not-actor-/PID:1 esrally.actor INFO Joining already running actor system with system base [multiprocTCPBase].
+2020-09-22 20:49:54,634 ActorAddr-(T|:1900)/PID:16 esrally.actor INFO Capabilities [{'coordinator': True, 'ip': '127.0.0.1', 'Convention Address.IPv4': '127.0.0.1:1900', 'Thespian ActorSystem Name': 'multiprocTCPBase', 'Thespian ActorSystem Version': 2, 'Thespian Watch Supported': True, 'Python Version': (3, 8, 2, 'final', 0), 'Thespian Generation': (3, 10), 'Thespian Version': '1600807794611'}] match requirements [{'coordinator': True}].
+2020-09-22 20:49:55,585 ActorAddr-(T|:39393)/PID:18 esrally.utils.process INFO Cloning into '/rally/.rally/benchmarks/tracks/default'...
+
+2020-09-22 20:49:55,591 ActorAddr-(T|:39393)/PID:18 esrally.utils.repo INFO Checking out [7] in [/rally/.rally/benchmarks/tracks/default] for distribution version [7.9.1].
+2020-09-22 20:49:55,604 ActorAddr-(T|:39393)/PID:18 esrally.utils.process INFO Switched to a new branch '7'
+Branch '7' set up to track remote branch '7' from 'origin'.
+
+2020-09-22 20:49:55,604 ActorAddr-(T|:39393)/PID:18 esrally.utils.repo INFO Rebasing on [7] in [/rally/.rally/benchmarks/tracks/default] for distribution version [7.9.1].
+2020-09-22 20:49:55,618 ActorAddr-(T|:39393)/PID:18 esrally.utils.process INFO Already on '7'
+Your branch is up to date with 'origin/7'.
+
+2020-09-22 20:49:55,629 ActorAddr-(T|:39393)/PID:18 esrally.utils.process INFO Current branch 7 is up to date.
+
+2020-09-22 20:51:25,941 ActorAddr-(T|:33469)/PID:41 esrally.actor INFO Received signal from race control to start engine.
+2020-09-22 20:49:55,635 ActorAddr-(T|:39393)/PID:18 esrally.track.loader INFO Reading track specification file [/rally/.rally/benchmarks/tracks/default/geopoint/track.json].
+2020-09-22 20:51:25,942 ActorAddr-(T|:33469)/PID:41 esrally.actor INFO Cluster will not be provisioned by Rally.
+2020-09-22 20:49:55,672 ActorAddr-(T|:39393)/PID:18 esrally.track.loader INFO Final rendered track for '/rally/.rally/benchmarks/tracks/default/geopoint/track.json' has been written to '/tmp/tmpef33__09.json'.
+2020-09-22 20:49:55,678 ActorAddr-(T|:39393)/PID:18 esrally.track.loader INFO Loading template [definition for index osmgeopoints in index.json].
+2020-09-22 20:49:55,683 ActorAddr-(T|:39393)/PID:18 esrally.client INFO Creating ES client connected to [{'host': 'elasticsearch-master', 'port': '9200'}] with options [{'use_ssl': False, 'verify_certs': True, 'timeout': 120}]
+2020-09-22 20:49:55,683 ActorAddr-(T|:39393)/PID:18 esrally.client INFO SSL support: off
+2020-09-22 20:49:55,683 ActorAddr-(T|:39393)/PID:18 esrally.client INFO HTTP basic authentication: off
+2020-09-22 20:49:55,683 ActorAddr-(T|:39393)/PID:18 esrally.client INFO HTTP compression: off
+2020-09-22 20:49:55,688 ActorAddr-(T|:39393)/PID:18 esrally.metrics INFO Creating Elasticsearch metrics store
+2020-09-22 20:49:55,688 ActorAddr-(T|:39393)/PID:18 esrally.metrics INFO Opening metrics store for race timestamp=[20200922T204954Z], track=[geopoint], challenge=[append-fast-with-conflicts], car=[['external']]
+2020-09-22 20:51:25,922 ActorAddr-(T|:39393)/PID:18 esrally.metrics INFO Creating ES race store
+2020-09-22 20:51:25,923 ActorAddr-(T|:39393)/PID:18 esrally.client INFO Creating ES client connected to [{'host': 'elasticsearch-master', 'port': '9200'}] with options [{'use_ssl': False, 'verify_certs': True, 'timeout': 120}]
+2020-09-22 20:51:25,923 ActorAddr-(T|:39393)/PID:18 esrally.client INFO SSL support: off
+2020-09-22 20:51:25,923 ActorAddr-(T|:39393)/PID:18 esrally.client INFO HTTP basic authentication: off
+2020-09-22 20:51:25,923 ActorAddr-(T|:39393)/PID:18 esrally.client INFO HTTP compression: off
+2020-09-22 20:51:25,927 ActorAddr-(T|:39393)/PID:18 esrally.actor INFO Asking mechanic to start the engine.
+2020-09-22 20:51:25,927 ActorAddr-(T|:39393)/PID:18 esrally.actor INFO Capabilities [{'coordinator': True, 'ip': '127.0.0.1', 'Convention Address.IPv4': '127.0.0.1:1900', 'Thespian ActorSystem Name': 'multiprocTCPBase', 'Thespian ActorSystem Version': 2, 'Thespian Watch Supported': True, 'Python Version': (3, 8, 2, 'final', 0), 'Thespian Generation': (3, 10), 'Thespian Version': '1600807794611'}] match requirements [{'coordinator': True}].
+2020-09-22 20:51:25,943 ActorAddr-(T|:39393)/PID:18 esrally.actor INFO Mechanic has started engine successfully.
+2020-09-22 20:51:25,943 ActorAddr-(T|:39393)/PID:18 esrally.actor INFO Capabilities [{'coordinator': True, 'ip': '127.0.0.1', 'Convention Address.IPv4': '127.0.0.1:1900', 'Thespian ActorSystem Name': 'multiprocTCPBase', 'Thespian ActorSystem Version': 2, 'Thespian Watch Supported': True, 'Python Version': (3, 8, 2, 'final', 0), 'Thespian Generation': (3, 10), 'Thespian Version': '1600807794611'}] match requirements [{'coordinator': True}].
+2020-09-22 20:51:25,945 ActorAddr-(T|:39393)/PID:18 esrally.actor INFO Telling driver to prepare for benchmarking.
+2020-09-22 20:51:25,957 ActorAddr-(T|:37987)/PID:42 esrally.client INFO Creating ES client connected to [{'host': 'elasticsearch-master', 'port': '9200'}] with options [{'use_ssl': False, 'verify_certs': True, 'timeout': 120}]
+2020-09-22 20:51:25,957 ActorAddr-(T|:37987)/PID:42 esrally.client INFO SSL support: off
+2020-09-22 20:51:25,958 ActorAddr-(T|:37987)/PID:42 esrally.client INFO HTTP basic authentication: off
+2020-09-22 20:51:25,958 ActorAddr-(T|:37987)/PID:42 esrally.client INFO HTTP compression: off
+2020-09-22 20:51:25,963 ActorAddr-(T|:37987)/PID:42 esrally.metrics INFO Creating Elasticsearch metrics store
+2020-09-22 20:51:25,963 ActorAddr-(T|:37987)/PID:42 esrally.metrics INFO Opening metrics store for race timestamp=[20200922T204954Z], track=[geopoint], challenge=[append-fast-with-conflicts], car=[['external']]
+2020-09-22 20:51:26,12 ActorAddr-(T|:37987)/PID:42 esrally.metrics INFO [rally-metrics-2020-09] already exists.
+2020-09-22 20:52:26,18 ActorAddr-(T|:37987)/PID:42 esrally.client INFO Creating ES client connected to [{'host': 'elasticsearch-master'}] with options [{'timeout': 60, 'retry-on-timeout': True}]
+2020-09-22 20:52:26,18 ActorAddr-(T|:37987)/PID:42 esrally.client INFO SSL support: off
+2020-09-22 20:52:26,18 ActorAddr-(T|:37987)/PID:42 esrally.client INFO HTTP basic authentication: off
+2020-09-22 20:52:26,18 ActorAddr-(T|:37987)/PID:42 esrally.client INFO HTTP compression: off
+2020-09-22 20:52:26,19 ActorAddr-(T|:37987)/PID:42 esrally.driver.driver INFO Checking if REST API is available.
+2020-09-22 20:52:26,23 ActorAddr-(T|:37987)/PID:42 esrally.client INFO REST API is available for >= [1] nodes after [0] attempts.
+2020-09-22 20:52:26,23 ActorAddr-(T|:37987)/PID:42 esrally.driver.driver INFO REST API is available.
+2020-09-22 20:52:26,26 ActorAddr-(T|:37987)/PID:42 esrally.actor INFO Capabilities [{'coordinator': True, 'ip': '127.0.0.1', 'Convention Address.IPv4': '127.0.0.1:1900', 'Thespian ActorSystem Name': 'multiprocTCPBase', 'Thespian ActorSystem Version': 2, 'Thespian Watch Supported': True, 'Python Version': (3, 8, 2, 'final', 0), 'Thespian Generation': (3, 10), 'Thespian Version': '1600807794611'}] match requirements [{'coordinator': True}].
+2020-09-22 20:52:26,40 ActorAddr-(T|:38357)/PID:43 esrally.actor INFO Preparing track [geopoint]
+2020-09-22 20:52:26,41 ActorAddr-(T|:38357)/PID:43 esrally.track.loader INFO Resolved data root directory for document corpus [geopoint] in track [geopoint] to ['/rally/.rally/benchmarks/data/geopoint'].
+2020-09-22 20:52:26,42 ActorAddr-(T|:38357)/PID:43 esrally.track.loader INFO Downloading data from [http://benchmarks.elasticsearch.org.s3.amazonaws.com/corpora/geopoint/documents.json.bz2] (482 MB) to [/rally/.rally/benchmarks/data/geopoint/documents.json.bz2].
+2020-09-22 20:53:24,790 ActorAddr-(T|:37987)/PID:42 esrally.actor INFO A track preparator has exited.
+2020-09-22 20:52:49,316 ActorAddr-(T|:38357)/PID:43 esrally.track.loader INFO Downloaded data from [http://benchmarks.elasticsearch.org.s3.amazonaws.com/corpora/geopoint/documents.json.bz2] to [/rally/.rally/benchmarks/data/geopoint/documents.json.bz2].
+2020-09-22 20:52:49,317 ActorAddr-(T|:38357)/PID:43 esrally.track.loader INFO Decompressing track data from [/rally/.rally/benchmarks/data/geopoint/documents.json.bz2] to [/rally/.rally/benchmarks/data/geopoint/documents.json] (resulting size: 2.28 GB) ... 
+2020-09-22 20:53:24,794 ActorAddr-(T|:37987)/PID:42 esrally.actor INFO A track preparator has exited.
