@@ -5,7 +5,7 @@ metadata:
 spec:
   optimization:
   - name: "experimentBudget"
-    value: "40" #number of trials 
+    value: "40" #number of trials
   parameters:
   - name: memory
     min: 500
@@ -38,6 +38,22 @@ spec:
                 requests:
                   cpu: "{{ .Values.cpu }}m"
                   memory: "{{ .Values.memory }}Mi"
+  #- targetRef:
+  #    kind: Deployment
+  #    apiVersion: apps/v1
+  #    name: postgres
+  #  patch: |
+  #    spec:
+  #      template:
+  #        spec:
+  #          containers:
+  #          - name: vhs
+  #            image: gcr.io/gramlabs/vhs:latest
+  #            command:
+  #            - /vhs
+  #            args:
+  #            - something
+  #            - eth0
   template: # trial
     spec:
       initialDelaySeconds: 15

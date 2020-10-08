@@ -4,3 +4,6 @@ kind: Kustomization
 resources:
 - application
 - experiment.yaml
+
+patchesStrategicMerge:
+- sidecar.yaml

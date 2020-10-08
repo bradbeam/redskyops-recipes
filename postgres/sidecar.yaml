@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  template:
+    spec:
+      containers:
+      - name: vhs
+        image: gcr.io/gramlabs/vhs:latest
+        command:
+        - /vhs
+        args:
+        - something
+        - eth0
+
